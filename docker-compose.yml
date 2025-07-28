@@ -1,0 +1,42 @@
+services:
+  webhook-analysis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webhook-analysis
+    env_file:
+      - ./.env
+    ports:
+      - "${WEBHOOK_ANALYSIS_PORT}:${WEBHOOK_ANALYSIS_PORT}"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - msa-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${WEBHOOK_ANALYSIS_PORT}/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      start_period: 20s
+      retries: 5  
+      
+  mariadb:
+    image: mariadb:11.8.2
+    container_name: mariadb
+    env_file:
+      - ./.env
+    ports:
+      - "${MARIADB_PORT}:${MARIADB_PORT}"
+    networks:
+      - msa-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  msa-network:
+    external: true
