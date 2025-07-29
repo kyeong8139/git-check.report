@@ -25,8 +25,8 @@ FROM openjdk:21-slim
 
 WORKDIR /app
 
-EXPOSE ${WEBHOOK_ANALYSIS_PORT}
+EXPOSE ${REPORT_SERVICE_PORT}
 
-COPY --from=builder /app/build/libs/*.jar webhook-analysis.jar
+COPY --from=builder /app/build/libs/*.jar report-service.jar
 
-ENTRYPOINT ["java", "-jar", "webhook-analysis.jar"]
+ENTRYPOINT ["java", "-jar", "report-service.jar"]

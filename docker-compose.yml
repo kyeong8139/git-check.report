@@ -1,13 +1,13 @@
 services:
-  webhook-analysis:
+  report-service:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: webhook-analysis
+    container_name: report-service
     env_file:
       - ./.env
     ports:
-      - "${WEBHOOK_ANALYSIS_PORT}:${WEBHOOK_ANALYSIS_PORT}"
+      - "${REPORT_SERVICE_PORT}:${REPORT_SERVICE_PORT}"
     depends_on:
       mariadb:
         condition: service_healthy
@@ -15,7 +15,7 @@ services:
       - msa-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${WEBHOOK_ANALYSIS_PORT}/actuator/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:${REPORT_SERVICE_PORT}/actuator/health"]
       interval: 10s
       timeout: 5s
       retries: 5  
