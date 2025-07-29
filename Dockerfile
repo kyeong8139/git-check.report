@@ -25,7 +25,7 @@ FROM openjdk:21-slim
 
 WORKDIR /app
 
-EXPOSE ${SERVER_PORT}
+EXPOSE ${WEBHOOK_ANALYSIS_PORT}
 
 COPY --from=builder /app/build/libs/*.jar webhook-analysis.jar
 
