@@ -1,13 +1,13 @@
-package com.git_check.webhook_analysis;
+package com.git_check.report;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WebhookAnalysisApplication {
+public class ReportApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WebhookAnalysisApplication.class, args);
+		SpringApplication.run(ReportApplication.class, args);
 	}
 
 }
